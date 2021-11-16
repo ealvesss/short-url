@@ -8,6 +8,7 @@ namespace HeyUrl_Challenge.Extensions
         public static void InjectProfiles(this IServiceCollection services)
         {
             services.AddAutoMapper(options => options.AddProfile<UrlProfile>());
+            services.AddAutoMapper(options => options.AddProfile<ClickProfile>());
         }
     }
 }

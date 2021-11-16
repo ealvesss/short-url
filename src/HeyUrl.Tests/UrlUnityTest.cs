@@ -1,12 +1,12 @@
+using FluentAssertions;
 using HeyUrl.Domain;
 using HeyUrl.Domain.Entities;
-using HeyUrl.Domain.Helper.Interface;
+using HeyUrl.Helper;
 using HeyUrl_Challenge.Domain.Services.Interfaces;
-using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using System;
-using FluentAssertions;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace tests
@@ -23,17 +23,18 @@ namespace tests
         {
             var repository = new Mock<IUrlRepository>();
             repository.Setup(x => x.GetAll())
-                      .ReturnsAsync(new List<UrlEntity>(){
-                          new UrlEntity(){
-                              Id = 1,
-                              Clicks = 0,
+                      .ReturnsAsync(new List<Url>(){
+                          new Url(){
+                              Click = new Click(){
+                                  ClickedAt = DateTime.Now,
+                              },
                               CreatedAt = DateTime.Now,
                               OriginalUrl = "http://www.google.com",
-                              ShortUrl = "ABCDE"  
+                              ShortUrl = new UrlShortHelper().ShortUrl((Int64) new Random(100).NextDouble())
                           }
                       });
 
-            UrlService service = new UrlService(repository.Object, Mock.Of<IUrlShortHelper>());
+            UrlService service = new UrlService(repository.Object,Mock.Of<IDbHelper>(), Mock.Of<IUrlShortHelper>());
 
             var result = await service.GetAll();
 
@@ -43,22 +44,30 @@ namespace tests
 
         [Test]
         public async Task should_create_short_url()
-        {   
-            var entity = new UrlEntity() { 
-                Clicks = 1,
+        {
+            var entity = new Url()
+            {
+                Click = new Click()
+                {
+                    ClickedAt = DateTime.Now,
+                },
                 CreatedAt = DateTime.Now,
-                Id = 1,
                 OriginalUrl = "http://google.com",
-                ShortUrl = "ABCDE"
+                ShortUrl = new UrlShortHelper().ShortUrl((Int64)new Random(100).NextDouble())
             };
 
             var repository = new Mock<IUrlRepository>();
-            repository.Setup(x => x.PersistShortUrl(entity))
+            repository.Setup(x => x.Create(entity))
                       .ReturnsAsync(true);
 
-            UrlService service = new UrlService(repository.Object, Mock.Of<IUrlShortHelper>());
+            UrlService service = new UrlService(repository.Object,Mock.Of<IDbHelper>(), Mock.Of<IUrlShortHelper>());
 
             var result = await service.Create(entity);
+        }
+
+        private int IDbHelper()
+        {
+            throw new NotImplementedException();
         }
     }
 }

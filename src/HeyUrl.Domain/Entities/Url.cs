@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HeyUrl.Domain.Entities
 {
-    public class UrlEntity : EntityBase
+    public class Url : EntityBase
     {
-        public int ShortUrlId { get; set; }
-
         [Required]
         public string ShortUrl { get; set; }
 
@@ -17,7 +15,6 @@ namespace HeyUrl.Domain.Entities
         [DataType(DataType.Date)]
         public DateTime CreatedAt { get; set; }
 
-        public ClickEntity Click { get; set; }
-
+        public Click Click { get; set; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿namespace HeyUrl.Domain.Entities
 {
-    public class PlatformEntity : EntityBase
+    public class Platform : EntityBase
     {
-        public int Count { get; set; }
+        public string Browser { get; set; }
         public string OS { get; set; }
-
-
     }
 }

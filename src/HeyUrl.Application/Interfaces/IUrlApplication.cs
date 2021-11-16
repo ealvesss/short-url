@@ -6,7 +6,7 @@ namespace HeyUrl_Challenge.Application.Interfaces
 {
     public interface IUrlApplication
     {
-        Task Create(UrlDto dto);
-        Task<IEnumerable<UrlDto>> GetAll(string urlBase);
+        Task Create(UrlRequestDto dto);
+        Task<IEnumerable<UrlResponseDto>> GetAll(string urlBase);
     }
 }

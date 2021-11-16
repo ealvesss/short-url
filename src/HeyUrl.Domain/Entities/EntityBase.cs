@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HeyUrl.Domain.Entities
 {
@@ -10,7 +8,7 @@ namespace HeyUrl.Domain.Entities
 
         public EntityBase()
         {
-            Id = Guid.Empty;
+            Id = Guid.NewGuid();
         }
     }
 }

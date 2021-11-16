@@ -1,8 +1,8 @@
-﻿using HeyUrl.Domain.Helper.Interface;
+﻿using HeyUrl_Challenge.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
 
-namespace HeyUrl.CrossCutting.Helper
+namespace HeyUrl.Helper
 {
     public class UrlShortHelper : IUrlShortHelper
     {
@@ -13,6 +13,5 @@ namespace HeyUrl.CrossCutting.Helper
             return  Uri.TryCreate(currentUrl, UriKind.Absolute, out uriResult)
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
-        
     }
 }

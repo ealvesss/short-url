@@ -5,7 +5,7 @@ namespace HeyUrl_Challenge.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<UrlDto> Urls { get; set; }
-        public UrlDto NewUrl { get; set; }
+        public IEnumerable<UrlResponseDto> Urls { get; set; }
+        public UrlRequestDto NewUrl { get; set; }
     }
 }

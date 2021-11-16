@@ -9,8 +9,4 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HeyUrl.CrossCutting\HeyUrl.CrossCutting.csproj" />
-  </ItemGroup>
-
 </Project>

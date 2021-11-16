@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 
 namespace HeyUrl_Challenge.Domain.Services.Interfaces
 {
-    public interface IUrlRepository
+    public  interface IUrlRepository
     {
-
-        Task<bool> PersistShortUrl(UrlEntity entity);
-        Task<IEnumerable<UrlEntity>> GetAll();
+        Task<bool> Create(Url entity);
+        Task<IEnumerable<Url>> GetAll();
     }
 }

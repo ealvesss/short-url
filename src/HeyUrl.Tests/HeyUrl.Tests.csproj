@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HeyUrl.Domain\HeyUrl.Domain.csproj" />
+      <ProjectReference Include="..\HeyUrl.Web\HeyUrl.App.csproj" />
     </ItemGroup>
 
     
