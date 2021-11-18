@@ -1,11 +1,11 @@
 ﻿using HeyUrl.Infra.Context;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
+using HeyUrl.Domain.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Infra.Helper
+namespace HeyUrl.Infra.Helper
 {
     public class DbHelper : IDbHelper
     {
@@ -26,7 +26,7 @@ namespace HeyUrl_Challenge.Infra.Helper
                 Direction = System.Data.ParameterDirection.Output
             };
 
-            _repository.Database.ExecuteSqlRaw(query, result);
+            await _repository.Database.ExecuteSqlRawAsync(query, result);
 
             return (Int64)result.Value;
         }

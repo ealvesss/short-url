@@ -1,17 +1,16 @@
-﻿using HeyUrl.Domain;
+﻿using HeyUrl.Application;
+using HeyUrl.Application.Interfaces;
+using HeyUrl.Domain;
+using HeyUrl.Domain.Services;
 using HeyUrl.Domain.Services.Interfaces;
+using HeyUrl.Helper;
 using HeyUrl.Infra.Context;
-using HeyUrl_Challenge.Application;
-using HeyUrl_Challenge.Application.Interfaces;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
-using HeyUrl_Challenge.Infra.Repositories;
+using HeyUrl.Infra.Helper;
+using HeyUrl.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using HeyUrl.Helper;
-using HeyUrl_Challenge.Infra.Helper;
-using HeyUrl_Challenge.Domain.Services;
 
-namespace HeyUrl_Challenge.Extensions
+namespace HeyUrl.Extensions
 {
     public static class DependencyInjection
     {

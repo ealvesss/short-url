@@ -1,7 +1,7 @@
 ﻿using HeyUrl.Domain.Entities;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Infra.Repositories.Interfaces
+namespace HeyUrl.Infra.Repositories.Interfaces
 {
     public interface IClickRepository
     {

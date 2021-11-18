@@ -1,4 +1,4 @@
-using HeyUrl_Challenge.Application.Dtos;
+using HeyUrl.Application.Dtos;
 using System.Collections.Generic;
 
 namespace hey_url_challenge_code_dotnet.ViewModels

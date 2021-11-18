@@ -1,21 +1,19 @@
 ﻿using AutoMapper;
 using HeyUrl.Domain.Entities;
-using HeyUrl_Challenge.Application.Dtos;
+using HeyUrl.Application.Dtos;
+using HeyUrl.Application.AutoMapper.Profiles.Resolvers;
 
-namespace HeyUrl_Challenge.Application.AutoMapper.Profiles
+namespace HeyUrl.Application.AutoMapper.Profiles
 {
     public class UrlProfile : Profile
     {
         
         public UrlProfile()
         {
-            CreateMap<Url, UrlRequestDto>()
-                .ForMember(dest => dest.ShortUrl, opt => opt.MapFrom((src, dest, destMember, context) => context.Items["baseUrl"] + src.ShortUrl))
-                .ReverseMap();
-
             CreateMap<Url, UrlResponseDto>()
-                .ReverseMap();
+                .ForMember(dest => dest.CompleteUrl, opt => opt.MapFrom((src, dest, destMember, context) => new UrlCustomResolver().ConstructFullUrl(src,dest,null,context)));
 
+            CreateMap<UrlRequestDto, Url>();
         }
     }
 }

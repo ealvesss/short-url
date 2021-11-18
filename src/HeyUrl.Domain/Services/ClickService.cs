@@ -1,12 +1,8 @@
 ﻿using HeyUrl.Domain.Entities;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using HeyUrl.Domain.Services.Interfaces;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Domain.Services
+namespace HeyUrl.Domain.Services
 {
 
     public class ClickService : IClickService
@@ -15,28 +11,20 @@ namespace HeyUrl_Challenge.Domain.Services
         private readonly IClickRepository _repository;
         private readonly IDbHelper _dbHelper;
 
-        const string SEQUENCE = "sequence-Click";
-
-
         public ClickService(IClickRepository repo, IDbHelper dbHelper)
         {
             _repository = repo;
             _dbHelper = dbHelper;
         }
 
-        public async Task<Click> InsertClick(string ShortUrl)
+        public async Task<Url> GetByShortUrl(string shortUrl)
         {
-            var entity = await _repository.GetByShortUrl(ShortUrl);
-            entity.Clicks = entity.Clicks + 1;
-            await Update(entity);
-
-            return entity;
+            return await _repository.GetByShortUrl(shortUrl);
         }
 
-        public async Task Update(Click entity)
+        public async Task Create(Click entity)
         {
-            await _repository.Update(entity);
+            await _repository.Create(entity);
         }
-
     }
 }

@@ -1,4 +1,4 @@
-using HeyUrl_Challenge.Extensions;
+using HeyUrl.Extensions;
 using HeyUrl.Infra.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

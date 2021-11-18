@@ -1,8 +1,8 @@
 ﻿using hey_url_challenge_code_dotnet.ViewModels;
-using HeyUrl_Challenge.Application.Dtos;
-using HeyUrl_Challenge.Application.Interfaces;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
-using HeyUrl_Challenge.ViewModels;
+using HeyUrl.Application.Dtos;
+using HeyUrl.Application.Interfaces;
+using HeyUrl.Domain.Services.Interfaces;
+using HeyUrl.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Shyjus.BrowserDetection;
@@ -20,19 +20,16 @@ namespace HeyUrlChallengeCodeDotnet.Controllers
         private readonly IBrowserDetector browserDetector;
         private readonly IUrlShortHelper _urlHelper;
         private readonly IUrlApplication _urlApplication;
-        private readonly IClickApplication _clickApplication;
 
         public UrlsController(ILogger<UrlsController> logger, 
             IBrowserDetector browserDetector, 
             IUrlShortHelper helper, 
-            IUrlApplication UrlApplication,
-            IClickApplication ClickApplication)
+            IUrlApplication UrlApplication)
         {
             this.browserDetector = browserDetector;
             _logger = logger;
             _urlHelper = helper;
             _urlApplication = UrlApplication;
-            _clickApplication = ClickApplication;
         }
 
         public async Task<IActionResult> Index()
@@ -43,15 +40,7 @@ namespace HeyUrlChallengeCodeDotnet.Controllers
             model.Urls = await _urlApplication.GetAll(urlBase);
             return View(model);
         }
-
-        [Route("/{url}")]
-        public async Task<IActionResult> Visit(string url) {
-
-            var result = await _clickApplication.InsertClick(url);
-
-            return new OkObjectResult($"{result.Clicks}, {this.browserDetector.Browser.OS}, {this.browserDetector.Browser.Name}");
-        } 
-
+        
         [Route("urls/{url}")]
         public IActionResult Show(string url) => View(new ShowViewModel
         {

@@ -1,8 +1,17 @@
-﻿namespace HeyUrl.Domain.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HeyUrl.Domain.Entities
 {
     public class Platform : EntityBase
     {
-        public string Browser { get; set; }
-        public string OS { get; set; }
+        public string Description { get; set; }
+
+        public Browser Browser { get; set; }
+        
+        public Guid ClickId { get; set; }
+
+        public Click Click { get; set; }
+
     }
 }

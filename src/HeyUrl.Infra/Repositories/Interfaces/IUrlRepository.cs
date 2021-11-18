@@ -1,6 +1,6 @@
 ﻿using HeyUrl.Domain.Entities;
 
-namespace HeyUrl_Challenge.Infra.Repositories.Interfaces
+namespace HeyUrl.Infra.Repositories.Interfaces
 {
     public interface IUrlRepository
     {

@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
+using HeyUrl.Application.Dtos;
+using HeyUrl.Application.Interfaces;
 using HeyUrl.Domain.Entities;
 using HeyUrl.Domain.Services.Interfaces;
-using HeyUrl_Challenge.Application.Dtos;
-using HeyUrl_Challenge.Application.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Application
+namespace HeyUrl.Application
 {
     public class UrlApplication : IUrlApplication
     {
@@ -20,11 +19,12 @@ namespace HeyUrl_Challenge.Application
             _mapper = mapper;
         }
 
+        public object InsertClick => throw new System.NotImplementedException();
+
         public async Task Create(UrlRequestDto dto)
         {
             var entity = _mapper.Map<UrlRequestDto, Url>(dto);
 
-            entity.Click = new Click();
             await _service.Create(entity);
         }
 
@@ -33,7 +33,8 @@ namespace HeyUrl_Challenge.Application
             var entity = await _service.GetAll();
             var result = _mapper.Map<IEnumerable<Url>, IEnumerable<UrlResponseDto>>(entity, opt => opt.Items["baseUrl"] = urlbase);
 
-            return result ;
+            return result;
         }
+
     }
 }

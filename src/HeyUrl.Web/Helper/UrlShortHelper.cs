@@ -1,4 +1,4 @@
-﻿using HeyUrl_Challenge.Domain.Services.Interfaces;
+﻿using HeyUrl.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
 

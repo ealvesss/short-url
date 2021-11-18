@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HeyUrl_Challenge.Application.Dtos
+namespace HeyUrl.Application.Dtos
 {
     public class ClickReponseDto
     {

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using HeyUrl.Application.Dtos;
+using HeyUrl.Application.Interfaces;
 using HeyUrl.Domain.Entities;
-using HeyUrl_Challenge.Application.Dtos;
-using HeyUrl_Challenge.Application.Interfaces;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
+using HeyUrl.Domain.Services.Interfaces;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Application
+namespace HeyUrl.Application
 {
     public class ClickApplication : IClickApplication
     {
@@ -18,18 +18,16 @@ namespace HeyUrl_Challenge.Application
             _mapper = mapper;
         }
 
-        public async Task<ClickRequestDto> InsertClick(string shortUrl)
+        public async Task<UrlResponseDto> Create(ClickRequestDto dto)
         {
-            var result =  await _service.InsertClick(shortUrl);
-            var dto = _mapper.Map<Click,ClickRequestDto>(result);
+            var entity = _mapper.Map<ClickRequestDto, Click>(dto);
 
-            return dto;
+            await _service.Create(entity);
+            var urlEntity = await _service.GetByShortUrl(dto.ShortUrl);
 
-        }
+            var result = _mapper.Map<Url, UrlResponseDto>(urlEntity);
 
-        public Task Update(Click entitie)
-        {
-            throw new System.NotImplementedException();
+            return result;
         }
     }
 }

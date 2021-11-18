@@ -3,21 +3,25 @@ using System;
 using HeyUrl.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HeyUrl.Infra.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211117024633_delete-field")]
+    partial class deletefield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.HasSequence("sequence-Click");
 
             modelBuilder.HasSequence("sequence-Url");
 
@@ -30,13 +34,12 @@ namespace HeyUrl.Infra.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("PlatformId")
+                    b.Property<Guid>("UrlId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlatformId")
-                        .IsUnique();
+                    b.HasIndex("UrlId");
 
                     b.ToTable("Browser");
                 });
@@ -50,12 +53,16 @@ namespace HeyUrl.Infra.Migrations
                     b.Property<DateTime>("ClickedAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<long>("Clicks")
+                        .HasColumnType("bigint");
+
                     b.Property<Guid>("UrlId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UrlId");
+                    b.HasIndex("UrlId")
+                        .IsUnique();
 
                     b.ToTable("Click");
                 });
@@ -66,16 +73,15 @@ namespace HeyUrl.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ClickId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("UrlId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ClickId")
-                        .IsUnique();
+                    b.HasIndex("UrlId");
 
                     b.ToTable("Platform");
                 });
@@ -90,9 +96,11 @@ namespace HeyUrl.Infra.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("OriginalUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ShortUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -102,20 +110,20 @@ namespace HeyUrl.Infra.Migrations
 
             modelBuilder.Entity("HeyUrl.Domain.Entities.Browser", b =>
                 {
-                    b.HasOne("HeyUrl.Domain.Entities.Platform", "Platform")
-                        .WithOne("Browser")
-                        .HasForeignKey("HeyUrl.Domain.Entities.Browser", "PlatformId")
+                    b.HasOne("HeyUrl.Domain.Entities.Url", "Url")
+                        .WithMany("Browser")
+                        .HasForeignKey("UrlId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Platform");
+                    b.Navigation("Url");
                 });
 
             modelBuilder.Entity("HeyUrl.Domain.Entities.Click", b =>
                 {
                     b.HasOne("HeyUrl.Domain.Entities.Url", "Url")
-                        .WithMany("Click")
-                        .HasForeignKey("UrlId")
+                        .WithOne("Click")
+                        .HasForeignKey("HeyUrl.Domain.Entities.Click", "UrlId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -124,28 +132,22 @@ namespace HeyUrl.Infra.Migrations
 
             modelBuilder.Entity("HeyUrl.Domain.Entities.Platform", b =>
                 {
-                    b.HasOne("HeyUrl.Domain.Entities.Click", "Click")
-                        .WithOne("Platform")
-                        .HasForeignKey("HeyUrl.Domain.Entities.Platform", "ClickId")
+                    b.HasOne("HeyUrl.Domain.Entities.Url", "Url")
+                        .WithMany("Platform")
+                        .HasForeignKey("UrlId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Click");
-                });
-
-            modelBuilder.Entity("HeyUrl.Domain.Entities.Click", b =>
-                {
-                    b.Navigation("Platform");
-                });
-
-            modelBuilder.Entity("HeyUrl.Domain.Entities.Platform", b =>
-                {
-                    b.Navigation("Browser");
+                    b.Navigation("Url");
                 });
 
             modelBuilder.Entity("HeyUrl.Domain.Entities.Url", b =>
                 {
+                    b.Navigation("Browser");
+
                     b.Navigation("Click");
+
+                    b.Navigation("Platform");
                 });
 #pragma warning restore 612, 618
         }

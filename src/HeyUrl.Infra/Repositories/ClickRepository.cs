@@ -1,10 +1,11 @@
 ﻿using HeyUrl.Domain.Entities;
 using HeyUrl.Infra.Context;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
+using HeyUrl.Domain.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System;
 
-namespace HeyUrl_Challenge.Infra.Repositories
+namespace HeyUrl.Infra.Repositories
 {
     public class ClickRepository : IClickRepository
     {
@@ -15,15 +16,26 @@ namespace HeyUrl_Challenge.Infra.Repositories
             _ctx = repo;
         }
 
-        public async Task Update(Click entity)
+        public async Task<Click> GetByUrlId(Guid UrlId)
         {
-            _ctx.Update(entity);
-            await _ctx.SaveChangesAsync();
+            return await _ctx.Click.AsNoTracking()
+                .Include(p => p.Platform)
+                .ThenInclude(b => b.Browser).FirstOrDefaultAsync(x => x.UrlId == UrlId);
         }
 
-        public async Task<Click> GetByShortUrl(string ShortUrl)
+        public async Task<Url> GetByShortUrl(string ShortUrl)
         {
-            return await _ctx.Click.Include(u => u.Url).FirstOrDefaultAsync(x => x.Url.ShortUrl == ShortUrl);
+            return await _ctx.Url.AsNoTracking()
+                                 .Include(u => u.Click)
+                                 .ThenInclude(c => c.Platform)
+                                 .ThenInclude(p => p.Browser)
+                                 .SingleOrDefaultAsync(u => u.ShortUrl == ShortUrl);
+        }
+
+        public async Task<bool> Create(Click entity)
+        {
+            _ctx.Add(entity);
+            return await _ctx.SaveChangesAsync() > 0;
         }
     }
 }

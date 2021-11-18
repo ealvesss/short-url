@@ -1,11 +1,13 @@
 ﻿using HeyUrl.Domain.Entities;
+using System;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Domain.Services.Interfaces
+namespace HeyUrl.Domain.Services.Interfaces
 {
     public interface IClickRepository
     {
-        Task<Click> GetByShortUrl(string ShortUrl);
-        Task Update(Click entity);
+        Task<Click> GetByUrlId(Guid UrlId);
+        Task<Url> GetByShortUrl(string shortUrl);
+        Task<bool> Create(Click entity);
     }
 }

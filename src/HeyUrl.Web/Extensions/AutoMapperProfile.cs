@@ -1,7 +1,7 @@
-﻿using HeyUrl_Challenge.Application.AutoMapper.Profiles;
+﻿using HeyUrl.Application.AutoMapper.Profiles;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HeyUrl_Challenge.Extensions
+namespace HeyUrl.Extensions
 {
     public static class AutoMapperProfile
     {
@@ -9,6 +9,8 @@ namespace HeyUrl_Challenge.Extensions
         {
             services.AddAutoMapper(options => options.AddProfile<UrlProfile>());
             services.AddAutoMapper(options => options.AddProfile<ClickProfile>());
+            services.AddAutoMapper(options => options.AddProfile<BrowserProfile>());
+            services.AddAutoMapper(options => options.AddProfile<PlatformProfile>());
         }
     }
 }

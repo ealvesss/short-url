@@ -1,20 +1,17 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace HeyUrl.Domain.Entities
 {
     public class Url : EntityBase
     {
-        [Required]
         public string ShortUrl { get; set; }
 
-        [Required]
         public string OriginalUrl { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
         public DateTime CreatedAt { get; set; }
 
-        public Click Click { get; set; }
+        public IList<Click> Click { get; set; }
+
     }
 }

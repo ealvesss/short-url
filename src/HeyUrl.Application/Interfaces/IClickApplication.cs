@@ -1,13 +1,12 @@
-﻿using HeyUrl.Domain.Entities;
-using HeyUrl_Challenge.Application.Dtos;
+﻿using HeyUrl.Application.Dtos;
+using HeyUrl.Domain.Entities;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Application.Interfaces
+namespace HeyUrl.Application.Interfaces
 {
     public interface IClickApplication
     {
-        Task<ClickRequestDto> InsertClick(string shortUrl);
-        Task Update(Click entitie);
+        Task<UrlResponseDto> Create(ClickRequestDto dto);
 
     }
 }

@@ -1,7 +1,8 @@
-﻿using HeyUrl_Challenge.Application.Dtos;
+﻿using HeyUrl.Application.Dtos;
+using System;
 using System.Collections.Generic;
 
-namespace HeyUrl_Challenge.ViewModels
+namespace HeyUrl.ViewModels
 {
     public class HomeViewModel
     {

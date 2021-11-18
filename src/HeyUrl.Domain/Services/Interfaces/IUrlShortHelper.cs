@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Domain.Services.Interfaces
+namespace HeyUrl.Domain.Services.Interfaces
 {
     public  interface IUrlShortHelper
     {

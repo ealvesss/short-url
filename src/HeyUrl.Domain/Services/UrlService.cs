@@ -1,6 +1,5 @@
 ﻿using HeyUrl.Domain.Entities;
 using HeyUrl.Domain.Services.Interfaces;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +10,7 @@ namespace HeyUrl.Domain
         private readonly IUrlRepository _repository;
         private readonly IDbHelper _dbHelper;
         private readonly IUrlShortHelper _shortUrl;
+        const string SEQUENCE = "sequence-Url";
 
         public UrlService(IUrlRepository repo, IDbHelper dbHelper, IUrlShortHelper shortUrl)
         {
@@ -21,7 +21,7 @@ namespace HeyUrl.Domain
 
         public async Task<bool> Create(Url entity)
         {
-            var seq = await _dbHelper.IncrementSequence("sequence-Url");
+            var seq = await _dbHelper.IncrementSequence(SEQUENCE);
             entity.ShortUrl = _shortUrl.ShortUrl(seq);
 
             return await _repository.Create(entity);
@@ -30,6 +30,12 @@ namespace HeyUrl.Domain
         public async Task<IEnumerable<Url>> GetAll()
         {
             return await _repository.GetAll();
+        }
+
+        
+        public async Task<Url> GetByShortUrl(string shortUrl)
+        {
+            return await _repository.GetByShortUrl(shortUrl);
         }
     }
 }

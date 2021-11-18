@@ -8,5 +8,6 @@ namespace HeyUrl.Domain.Services.Interfaces
     {
         Task<bool> Create(Url entity);
         Task<IEnumerable<Url>> GetAll();
+        Task<Url> GetByShortUrl(string shortUrl);
     }
 }

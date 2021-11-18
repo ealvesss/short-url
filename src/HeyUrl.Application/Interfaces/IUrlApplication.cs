@@ -1,8 +1,8 @@
-﻿using HeyUrl_Challenge.Application.Dtos;
+﻿using HeyUrl.Application.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Application.Interfaces
+namespace HeyUrl.Application.Interfaces
 {
     public interface IUrlApplication
     {

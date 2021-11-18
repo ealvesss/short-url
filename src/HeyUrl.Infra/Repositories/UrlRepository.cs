@@ -1,34 +1,46 @@
 ﻿using HeyUrl.Domain.Entities;
 using HeyUrl.Infra.Context;
-using HeyUrl_Challenge.Domain.Services.Interfaces;
+using HeyUrl.Domain.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HeyUrl_Challenge.Infra.Repositories
+namespace HeyUrl.Infra.Repositories
 {
     public class UrlRepository : IUrlRepository
     {
-        private readonly ApplicationContext _repository;
+        private readonly ApplicationContext _ctx;
 
         public UrlRepository(ApplicationContext context)
         {
-            _repository = context;
+            _ctx = context;
         }
 
         public async Task<bool> Create(Url entity)
         {
-            _repository.Add(entity);
-            return _repository.SaveChanges() > 0;
+            _ctx.Add(entity);
+            var result = await _ctx.SaveChangesAsync() > 0;
+            return result;
         }
 
         public async Task<IEnumerable<Url>> GetAll()
         {
-            
-            var result = await _repository.Url.Include(c => c.Click).ToListAsync();
+            var result = await _ctx.Url
+                                   .Include(u => u.Click)
+                                   .ThenInclude(c => c.Platform)
+                                   .ThenInclude(p => p.Browser).ToListAsync();
 
             return result.Take(10);
+        }
+
+        public async Task<Url> GetByShortUrl(string ShortUrl)
+        {
+            return await _ctx.Url.AsNoTracking()
+                                 .Include(u => u.Click)
+                                 .ThenInclude(c => c.Platform)
+                                 .ThenInclude(p => p.Browser)
+                                 .Where(u => u.ShortUrl == ShortUrl).FirstOrDefaultAsync();
         }
     }
 }

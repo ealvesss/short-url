@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using HeyUrl.Domain.Entities;
-using HeyUrl_Challenge.Application.Dtos;
+using HeyUrl.Application.Dtos;
 
-namespace HeyUrl_Challenge.Application.AutoMapper.Profiles
+namespace HeyUrl.Application.AutoMapper.Profiles
 {
     public class ClickProfile : Profile
     {

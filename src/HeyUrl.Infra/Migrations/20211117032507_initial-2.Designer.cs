@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace HeyUrl_Challenge.Infra.Migrations
+namespace HeyUrl.Infra.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211116075253_initial-create")]
-    partial class initialcreate
+    [Migration("20211117032507_initial-2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,25 @@ namespace HeyUrl_Challenge.Infra.Migrations
             modelBuilder.HasSequence("sequence-Click");
 
             modelBuilder.HasSequence("sequence-Url");
+
+            modelBuilder.Entity("HeyUrl.Domain.Entities.Browser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PlatformId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("Browser");
+                });
 
             modelBuilder.Entity("HeyUrl.Domain.Entities.Click", b =>
                 {
@@ -42,8 +61,7 @@ namespace HeyUrl_Challenge.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UrlId")
-                        .IsUnique();
+                    b.HasIndex("UrlId");
 
                     b.ToTable("Click");
                 });
@@ -54,13 +72,15 @@ namespace HeyUrl_Challenge.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Browser")
+                    b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("OS")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UrlId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UrlId");
 
                     b.ToTable("Platform");
                 });
@@ -87,20 +107,49 @@ namespace HeyUrl_Challenge.Infra.Migrations
                     b.ToTable("Url");
                 });
 
+            modelBuilder.Entity("HeyUrl.Domain.Entities.Browser", b =>
+                {
+                    b.HasOne("HeyUrl.Domain.Entities.Platform", "Platform")
+                        .WithMany("Browsers")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Platform");
+                });
+
             modelBuilder.Entity("HeyUrl.Domain.Entities.Click", b =>
                 {
                     b.HasOne("HeyUrl.Domain.Entities.Url", "Url")
-                        .WithOne("Click")
-                        .HasForeignKey("HeyUrl.Domain.Entities.Click", "UrlId")
+                        .WithMany("Click")
+                        .HasForeignKey("UrlId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Url");
                 });
 
+            modelBuilder.Entity("HeyUrl.Domain.Entities.Platform", b =>
+                {
+                    b.HasOne("HeyUrl.Domain.Entities.Url", "Url")
+                        .WithMany("Platform")
+                        .HasForeignKey("UrlId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Url");
+                });
+
+            modelBuilder.Entity("HeyUrl.Domain.Entities.Platform", b =>
+                {
+                    b.Navigation("Browsers");
+                });
+
             modelBuilder.Entity("HeyUrl.Domain.Entities.Url", b =>
                 {
                     b.Navigation("Click");
+
+                    b.Navigation("Platform");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace HeyUrl_Challenge.Application.Dtos
+namespace HeyUrl.Application.Dtos
 {
     public class UrlResponseDto
     {
-        public string OriginalUrl { get; set; }
-        public int Clicks { get; set; }
-        public string ShortUrl { get; set; }
-        public DateTime CreatedAt { get; private set; }
-        public string Stats { get; set; }
+        public Guid Id { get; set; }
 
-        public ClickRequestDto Click { get; set; }
+        public string OriginalUrl { get; set; }
+
+        public string ShortUrl { get; set; }
+
+        public DateTime CreatedAt { get; private set; }
+
+        public string CompleteUrl { get; set; }
+
+        public IList<ClickReponseDto> Click { get; set; }
 
         public UrlResponseDto()
-        {
-            Click = new ClickRequestDto();
-        }
+        {}
     }
 }
