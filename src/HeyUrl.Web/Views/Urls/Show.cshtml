@@ -10,12 +10,12 @@
       <ul class="card-panel collection with-header">
         <li class="collection-header">
           <h4>
-            Stats for <a href="@Model.Url.ShortUrl">@Model.Url.ShortUrl</a>
+            Stats for <a href="@Model.Url.CompleteUrl">@Model.Url.ShortUrl</a>
           </h4>
         </li>
-        <li class="collection-item">Created May 22, 2021</li>
+        <li class="collection-item">Created @Model.CreatedAt</li>
         <li class="collection-item">
-          Original URL: https://drive.google.com/file/d/1VdLgSSMojWFb1GRoBAFX_eXy7oX2J
+          Original URL: @Model.Url.OriginalUrl
         </li>
       </ul>
     </div>
@@ -49,7 +49,7 @@
     function drawTotalClicksChart() {
       var data = google.visualization.arrayToDataTable([
         ['day', 'clicks'],
-      ].concat(@Json.Serialize(Model.DailyClicks.Select(e => new object[] { e.Key, e.Value }))));
+      ].concat(@Json.Serialize(Model.DailyClicks.Select(e => new object[] { e.Stat, e.Clicks }))));
       var options = {
         title: 'total clicks',
         haxis: {
@@ -67,7 +67,7 @@
     function drawBrowsersChart() {
       var data = google.visualization.arrayToDataTable([
         ['browser', 'clicks'],
-      ].concat(@Json.Serialize(Model.BrowseClicks.Select(e => new object[] { e.Key, e.Value }))));
+      ].concat(@Json.Serialize(Model.BrowseClicks.Select(e => new object[] { e.Stat, e.Clicks}))));
       var options = {
         title: 'Browsers'
       };
@@ -79,7 +79,7 @@
     function drawPlatformsChart() {
       var data = google.visualization.arrayToDataTable([
         ['platform', 'clicks'],
-      ].concat(@Json.Serialize(Model.PlatformClicks.Select(e => new object[] { e.Key, e.Value }))));
+      ].concat(@Json.Serialize(Model.PlatformClicks.Select(e => new object[] { e.Stat, e.Clicks }))));
       var options = {
         title: 'Platform'
       };

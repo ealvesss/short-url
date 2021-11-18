@@ -1,9 +1,9 @@
 ﻿using HeyUrl.Domain.Entities;
-using HeyUrl.Infra.Context;
 using HeyUrl.Domain.Services.Interfaces;
+using HeyUrl.Infra.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 namespace HeyUrl.Infra.Repositories
 {

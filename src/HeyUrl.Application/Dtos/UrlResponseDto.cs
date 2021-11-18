@@ -17,7 +17,15 @@ namespace HeyUrl.Application.Dtos
 
         public IList<ClickReponseDto> Click { get; set; }
 
+        public int Clicks { get; set; }
+
+        public List<UrlDailyClicksDto> DailyClicks { get; set; }
+
+        public List<UrlBrowserClicksDto> BrowserClicks { get; set; }
+
+        public List<UrlPlatformClicksDto> PlatformClicks { get; set; }
+
         public UrlResponseDto()
-        {}
+        { }
     }
 }

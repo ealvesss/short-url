@@ -29,6 +29,7 @@
       "commandName": "WSL2",
       "launchBrowser": true,
       "launchUrl": "https://localhost:5001",
+      "command": "xdg-open",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",

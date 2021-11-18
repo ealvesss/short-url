@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using HeyUrl.Domain.Entities;
 using HeyUrl.Application.Dtos;
+using HeyUrl.Domain.Entities;
 
 namespace HeyUrl.Application.AutoMapper.Profiles
 {

@@ -21,7 +21,7 @@ namespace HeyUrl.Extensions
                 options =>
                 options.UseNpgsql("Host=localhost;Database=ShortUrl;Username=postgres;Password=mydb1234")
                        .EnableSensitiveDataLogging(true)
-             ) ;
+             );
 
             services.AddScoped<IUrlShortHelper, UrlShortHelper>();
             services.AddScoped<IUrlApplication, UrlApplication>();

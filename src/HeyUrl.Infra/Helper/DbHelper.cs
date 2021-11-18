@@ -1,5 +1,5 @@
-﻿using HeyUrl.Infra.Context;
-using HeyUrl.Domain.Services.Interfaces;
+﻿using HeyUrl.Domain.Services.Interfaces;
+using HeyUrl.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System;
@@ -10,7 +10,7 @@ namespace HeyUrl.Infra.Helper
     public class DbHelper : IDbHelper
     {
         public readonly ApplicationContext _repository;
-        
+
         public DbHelper(ApplicationContext repo)
         {
             _repository = repo;

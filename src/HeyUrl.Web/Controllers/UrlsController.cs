@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Shyjus.BrowserDetection;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HeyUrlChallengeCodeDotnet.Controllers
@@ -21,9 +20,9 @@ namespace HeyUrlChallengeCodeDotnet.Controllers
         private readonly IUrlShortHelper _urlHelper;
         private readonly IUrlApplication _urlApplication;
 
-        public UrlsController(ILogger<UrlsController> logger, 
-            IBrowserDetector browserDetector, 
-            IUrlShortHelper helper, 
+        public UrlsController(ILogger<UrlsController> logger,
+            IBrowserDetector browserDetector,
+            IUrlShortHelper helper,
             IUrlApplication UrlApplication)
         {
             this.browserDetector = browserDetector;
@@ -40,61 +39,31 @@ namespace HeyUrlChallengeCodeDotnet.Controllers
             model.Urls = await _urlApplication.GetAll(urlBase);
             return View(model);
         }
-        
-        [Route("urls/{url}")]
-        public IActionResult Show(string url) => View(new ShowViewModel
+
+        [Route("stats/{shortUrl}")]
+        public async Task<IActionResult> Show(Guid UrlId, string shortUrl)
         {
-            Url = new UrlRequestDto {ShortUrl = url, Clicks = getrandom.Next(1, 10)},
-            DailyClicks = new Dictionary<string, int>
+            var urlDto = await _urlApplication.GetById(UrlId);
+
+            var Url = new ShowViewModel()
             {
-                {"1", 13},
-                {"2", 2},
-                {"3", 1},
-                {"4", 7},
-                {"5", 20},
-                {"6", 18},
-                {"7", 10},
-                {"8", 20},
-                {"9", 15},
-                {"10", 5}
-            },
-            BrowseClicks = new Dictionary<string, int>
-            {
-                { "IE", 13 },
-                { "Firefox", 22 },
-                { "Chrome", 17 },
-                { "Safari", 7 },
-            },
-            PlatformClicks = new Dictionary<string, int>
-            {
-                { "Windows", 13 },
-                { "macOS", 22 },
-                { "Ubuntu", 17 },
-                { "Other", 7 },
-            }
-        });
+                Url = urlDto,
+                DailyClicks = urlDto.DailyClicks,
+                BrowseClicks = urlDto.BrowserClicks,
+                PlatformClicks = urlDto.PlatformClicks,
+                CreatedAt = urlDto.CreatedAt.ToString("MMM d, yyy")
+            };
+
+            return View(Url);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Post(string currentUrl)
         {
-            if (String.IsNullOrEmpty(currentUrl))
-            {
-                TempData["Notice"] = "You should fill Url Field";
-                return RedirectToAction(nameof(Index));
-            }
-            
-            currentUrl.Trim();
-            
-            if (!_urlHelper.IsValidUrl(currentUrl))
-            {
-                TempData["Notice"] = "Invalid Url!";
-                return RedirectToAction(nameof(Index));
-            }
+           TempData["Notice"] = _urlApplication.Create(new UrlRequestDto() { OriginalUrl = currentUrl });
 
-            _urlApplication.Create(new UrlRequestDto() { OriginalUrl = currentUrl });
-
-            return RedirectToAction(nameof(Index));
+           return RedirectToAction(nameof(Index));
 
         }
     }

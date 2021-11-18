@@ -5,9 +5,11 @@ namespace hey_url_challenge_code_dotnet.ViewModels
 {
     public class ShowViewModel
     {
-        public UrlRequestDto Url { get; set; }
-        public Dictionary<string, int> DailyClicks { get; set; }
-        public Dictionary<string, int> BrowseClicks { get; set; }
-        public Dictionary<string, int> PlatformClicks { get; set; }
+        public UrlResponseDto Url { get; set; }
+        public string OriginalUrl { get; set; }
+        public string CreatedAt { get; set; }
+        public List<UrlDailyClicksDto> DailyClicks { get; set; }
+        public List<UrlBrowserClicksDto> BrowseClicks { get; set; }
+        public List<UrlPlatformClicksDto> PlatformClicks { get; set; }
     }
 }

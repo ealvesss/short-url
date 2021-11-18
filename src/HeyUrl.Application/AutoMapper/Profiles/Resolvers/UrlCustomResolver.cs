@@ -2,6 +2,7 @@
 using HeyUrl.Application.AutoMapper.Profiles.Resolvers.Interfaces;
 using HeyUrl.Application.Dtos;
 using HeyUrl.Domain.Entities;
+using System.Collections.Generic;
 
 namespace HeyUrl.Application.AutoMapper.Profiles.Resolvers
 {
@@ -13,13 +14,15 @@ namespace HeyUrl.Application.AutoMapper.Profiles.Resolvers
         {
             try
             {
-                return string.Format("{0}{1}", context.Items[BASE_URL], source.ShortUrl);
-            }
-            catch (System.Exception)
-            {
+                if (!context.Options.Items.ContainsKey(BASE_URL))
+                    return "";
 
+                return string.Format("{0}{1}", context.Options.Items[BASE_URL], source.ShortUrl);
+            }
+            catch (KeyNotFoundException)
+            {
                 return "";
-            }           
+            }
         }
     }
 }

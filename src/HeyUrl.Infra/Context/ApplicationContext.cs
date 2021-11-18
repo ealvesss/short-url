@@ -13,7 +13,7 @@ namespace HeyUrl.Infra.Context
         public DbSet<Click> Click { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
-        {}
+        { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
                         => optionsBuilder.LogTo(Console.WriteLine);
@@ -33,10 +33,10 @@ namespace HeyUrl.Infra.Context
 
             modelbuilder.Entity<Browser>()
                         .HasOne(c => c.Platform)
-                        .WithOne (b => b.Browser)
+                        .WithOne(b => b.Browser)
                         .HasForeignKey<Browser>(k => k.PlatformId);
 
-            modelbuilder.HasSequence($"sequence-{nameof(Url)}");            
+            modelbuilder.HasSequence($"sequence-{nameof(Url)}");
 
         }
 

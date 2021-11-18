@@ -1,5 +1,4 @@
 ﻿using HeyUrl.Application.Dtos;
-using System;
 using System.Collections.Generic;
 
 namespace HeyUrl.ViewModels

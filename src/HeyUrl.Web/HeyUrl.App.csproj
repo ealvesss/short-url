@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>HeyUrl_Challenge</RootNamespace>
+    <RootNamespace>HeyUrl</RootNamespace>
     <UserSecretsId>85c8d431-d742-4100-9d50-23711869484a</UserSecretsId>
   </PropertyGroup>
 

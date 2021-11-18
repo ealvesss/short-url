@@ -9,6 +9,6 @@ namespace HeyUrl.Application.Dtos
         public int Clicks { get; set; }
 
         public ClickReponseDto()
-        {}
+        { }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace HeyUrl.Domain.Entities
 {
@@ -8,7 +7,7 @@ namespace HeyUrl.Domain.Entities
         public string Description { get; set; }
 
         public Browser Browser { get; set; }
-        
+
         public Guid ClickId { get; set; }
 
         public Click Click { get; set; }

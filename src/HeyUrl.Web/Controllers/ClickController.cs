@@ -36,7 +36,7 @@ namespace HeyUrl.Controllers
                     }
                 }
             };
-            
+
             var result = await _clickApplication.Create(clickDto);
 
             return new OkObjectResult($"{result.Click.Count}, {this._browserDetector.Browser.OS}, {this._browserDetector.Browser.Name}");
